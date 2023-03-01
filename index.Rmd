@@ -1,5 +1,5 @@
 ---
-title: "Google Data Analytics: Case Study 1 (using RStudio)"
+title: "Google Data Analytics: Case Study 1"
 date: "2023-02-28"
 output:
   html_document:
@@ -11,32 +11,9 @@ output:
     toc_depth: 4
     toc_float: yes
     collapsed: no
+    css: style.css
 ---
 
-<style>
-body{
-  font-family: 'Oxygen', sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-h1,h2,h3,h4 {
-  font-family: 'Raleway', sans-serif;
-}
-
-.container { width: 1000px; }
-h3 {
-  background-color: #D4DAEC;
-  text-indent: 100px; 
-}
-h4 {
-  text-indent: 100px;
-}
-
-g-table-intro h4 {
-  text-indent: 0px;
-}
-</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -83,10 +60,22 @@ casual riders would buy a membership, and how digital media could affect their m
 interested in analyzing the Cyclistic historical bike trip data to identify trends.
 
 ### Ask
+
 Three questions will guide the future marketing program:
 1. How do annual members and casual riders use Cyclistic bikes differently?
 2. Why would casual riders buy Cyclistic annual memberships?
 3. How can Cyclistic use digital media to influence casual riders to become members?
+
+### Prepare
+
+For the preparation of the data, we will use the `Cyclistics history trip data` which you can download via this [link](https://divvy-tripdata.s3.amazonaws.com/index.html). The data returned for a period of one year, ranging from `01-2022` to `12-2022`. The extraction and manipulation of data are done for greater clarity of the processes that we will follow.
+
+::: {.infobox .caution data-latex="{caution}"}
+
+**NOTICE!**
+
+This data is provided according to the Divvy **Data License Agreement** and released on a monthly schedule.
+:::
 
 ```{r cars}
 library(tidyverse)
