@@ -1,8 +1,42 @@
 ---
 title: "Google Data Analytics: Case Study 1 (using RStudio)"
-output: html_document
 date: "2023-02-28"
+output:
+  html_document:
+    code_folding: hide
+    theme: lumen
+    highlight: espresso
+    toc: yes
+    number_sections: yes
+    toc_depth: 4
+    toc_float: yes
+    collapsed: no
 ---
+
+<style>
+body{
+  font-family: 'Oxygen', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+h1,h2,h3,h4 {
+  font-family: 'Raleway', sans-serif;
+}
+
+.container { width: 1000px; }
+h3 {
+  background-color: #D4DAEC;
+  text-indent: 100px; 
+}
+h4 {
+  text-indent: 100px;
+}
+
+g-table-intro h4 {
+  text-indent: 0px;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -47,16 +81,14 @@ do that, however, the marketing analyst team needs to better understand how annu
 casual riders would buy a membership, and how digital media could affect their marketing tactics. Moreno and her team are
 interested in analyzing the Cyclistic historical bike trip data to identify trends.
 
+## Ask
+Three questions will guide the future marketing program:
+1. How do annual members and casual riders use Cyclistic bikes differently?
+2. Why would casual riders buy Cyclistic annual memberships?
+3. How can Cyclistic use digital media to influence casual riders to become members?
+
 ```{r cars}
 library(tidyverse)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
