@@ -379,7 +379,7 @@ With the size  of the dataset, we are going to map the number of casual and memb
 
 For this analysis we are going to use `mapview` packages. `Mapview` is an R package that provides an interactive and easy-to-use interface for visualizing spatial data on interactive maps. The package is built on top of the leaflet JavaScript library, which allows for the creation of interactive and customizable web maps.
 
-```{r}
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
 # Loading the two geospatial packages to map data
 library(mapview)
 library(leafsync)
@@ -387,7 +387,7 @@ library(leafsync)
 
 Use `filter` function to extract the data based on **casual** users the month the **type of bicycle** and the **start station name**
 
-```{r}
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
 casual_electric_SDGA <- bike_df_clean %>%
   filter(member_casual == "casual" & month == "mars" & rideable_type == "electric_bike" & 
            start_station_name == "DuSable Lake Shore Dr & Monroe St") %>% 
@@ -396,7 +396,7 @@ casual_electric_SDGA <- bike_df_clean %>%
 
 Use `filter` function to extract the data based on **members** users the month the **type of bicycle** and the **start station name**
 
-```{r}
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
 member_electric_SDGA <- bike_df_clean %>%
   filter(member_casual == "member" & month == "mars" & rideable_type == "electric_bike" & 
            start_station_name == "DuSable Lake Shore Dr & Monroe St") %>% 
@@ -404,13 +404,13 @@ member_electric_SDGA <- bike_df_clean %>%
 ```
 
 
-```{r}
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
 casual <- mapview(casual_electric_SDGA, xcol = "Longitude",
         ycol = "Latitude",
         crs = 4326, grid = FALSE,cex = "ride_length",
         zcol = "ride_length",
         #col.regions = "tomato",
-        layer.name = "Members",
+        layer.name = "Casual",
         zoom = 19,
         use.layer.names = mapviewOptions(platform = "leaflet","CartoDB.DarkMatter"))
 
