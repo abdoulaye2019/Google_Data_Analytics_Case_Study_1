@@ -45,4 +45,8 @@ g-table-intro h4 {
   background-image: url('images/caution.png');
 }
 
+.note {
+  background-image: url('images/important.png');
+}
+
 </style>

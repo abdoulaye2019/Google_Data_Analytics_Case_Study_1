@@ -15,7 +15,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -62,9 +62,31 @@ interested in analyzing the Cyclistic historical bike trip data to identify tren
 ### Ask
 
 Three questions will guide the future marketing program:
-1. How do annual members and casual riders use Cyclistic bikes differently?
-2. Why would casual riders buy Cyclistic annual memberships?
-3. How can Cyclistic use digital media to influence casual riders to become members?
+
+* How do annual members and casual riders use Cyclistic bikes differently?
+* Why would casual riders buy Cyclistic annual memberships?
+* How can Cyclistic use digital media to influence casual riders to become members?
+
+Moreno has assigned you the first question to answer: How do annual members and casual riders use Cyclistic bikes
+differently?
+You will produce a report with the following deliverables:
+
+* A clear statement of the business task
+* A description of all data sources used
+* Documentation of any cleaning or manipulation of data
+* A summary of your analysis
+* Supporting visualizations and key findings
+* Your top three recommendations based on your analysis
+
+**Guiding questions**
+
+**What is the problem you are trying to solve?**
+
+* In this case, we try to answer how it is possible to use the bicycle dataset and help the company to increase the number of annual members. The stockholders want to know the differences between annual and casual members. How to use digital marketing to make promotion about marketing tactics.
+
+**How can your insights drive business decisions?**
+
+* The use of data which are collections of facts including historical bikes will help in decision making which will help stakeholders to make decisions based on the data. Overall, data-driven decision-making can help businesses make more informed and objective decisions, reduce bias, and optimize business operations. By leveraging data analysis tools and techniques, businesses can gain insights that would otherwise be difficult or impossible to obtain and make decisions that are based on empirical evidence rather than gut instinct.
 
 ### Prepare
 
@@ -77,8 +99,272 @@ For the preparation of the data, we will use the `Cyclistics history trip data` 
 This data is provided according to the Divvy **Data License Agreement** and released on a monthly schedule.
 :::
 
-```{r cars}
+Seeing the size of the _Cyclistic bike-share dataset_, the software that we are choosing to analyze this dataset is **R** programming language and the **RStudio** IDE (Integrated Development Environment). the size of the dataset led us to use RStudio instead of using **spreadsheets** such as google sheets.
+
+### Process
+
+Overall, data processing is a critical step in turning raw data into meaningful insights that can inform decision-making and drive business success. By following a structured process for data processing, organizations can ensure that their data is accurate, complete, and actionable.
+
+In this work we gonna use the [tidyverse](https://www.tidyverse.org/packages/) which nests many packages (ggplot2, dplyr, tydir, readr, purrr,  tibble, stringr and forcats) stacked in R for cleaning, transforming, and handling data.
+
+First we will install the necessary packages to do the exploratory data analysis (EDA). The `install.packages()` function will be used:
+
+* `install.packages('tidyverse')`
+* `install.packages('lubridate')`
+
+After installation this will be loaded `tidyverse`, `lubridate`, `janitor`
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
 library(tidyverse)
+library(lubridate)
+library(janitor)
+library(gt)
 ```
 
+Then we will import our data which is in our machine in CSV format (Comma Separated Value), all data that we import will assign to a new variable using the read_csv() function.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Read data
+Jan2022 <- read_csv("../data/202201-divvy-tripdata.csv")
+Feb2022 <- read_csv("../data/202202-divvy-tripdata.csv")
+Mar2022 <- read_csv("../data/202203-divvy-tripdata.csv")
+Apr2022 <- read_csv("../data/202204-divvy-tripdata.csv")
+May2022 <- read_csv("../data/202205-divvy-tripdata.csv")
+Jun2022 <- read_csv("../data/202206-divvy-tripdata.csv")
+Jul2022 <- read_csv("../data/202207-divvy-tripdata.csv")
+Aug2022 <- read_csv("../data/202208-divvy-tripdata.csv")
+Sep2022 <- read_csv("../data/202209-divvy-publictripdata.csv")
+Oct2022 <- read_csv("../data/202210-divvy-tripdata.csv")
+Nov2022 <- read_csv("../data/202211-divvy-tripdata.csv")
+Dec2022 <- read_csv("../data/202212-divvy-tripdata.csv")
+```
+
+Now it's time to make some exploration using functions to see columns name the structure of data.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+colnames(Jan2022)
+colnames(Feb2022)
+colnames(Apr2022)
+```
+
+We want to see column names with the type of each attribute using the `glimpse()` function is a good way to make this process.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+glimpse(Jan2022)
+glimpse(Feb2022)
+
+```
+:::: {.blackbox data-latex=""}
+::: {.center data-latex=""}
+**NOTICE!**
+:::
+
+In the same we can use `glimpse()` function it's also possible to use the `colnames()` function or `str()` to get an overview of our **DataFrame**.
+::::
+
+This can be used to view all data with their characteristics.
+
+We can also use the `head()` function to see the first rows of the data table. The head() function can be particularly useful when working with large data sets, as it allows you to quickly get a sense of the structure and content of the data without having to view the entire data set.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+print(head(Jan2022))
+```
+
+After looking at all these **DataFrame** that have the same columns now is very useful to merge data. The `bind_rows()` function is a built-in function in R that is used to combine multiple **DataFrames** row-wise (i.e., stacking them on top of each other). It is part of the `dplyr` package, which is a popular package for data manipulation and analysis in R.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Using the bind_row() to combine all DataFrame in one
+bike_df <- bind_rows(Jan2022, Feb2022, Mar2022, Apr2022, May2022, Jun2022, Jul2022, Aug2022, Sep2022, Oct2022, Nov2022, Dec2022)
+```
+
+We can also use `head()` function to see the first six rows. The head() function is a built-in function in R that is used to view the first few rows of a data frame or matrix.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Using a head() function to see again merges dataframe
+print(head(bike_df))
+```
+
+If you need to see data in interactive table ``DT` is available. The `DT` package is a popular package in R that provides an interface to the JavaScript library DataTables. DataTables is a powerful library for creating interactive and customizable tables in web pages, and the DT package allows you to easily create and manipulate DataTables within R.
+
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Show interactive table using the DT package and pipe operator to nest fonctions.
+library(DT)
+bike_df %>% 
+  head(5) %>% 
+  gt()
+```
+
+
+Following code chunks will be used for this 'Process' phase for `bike_df`.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# checking merged data frame
+colnames(bike_df)  #List of column names
+head(bike_df)  #See the first 6 rows of data frame.  Also tail(bike_data)
+str(bike_df)  #See list of columns and data types (numeric, character, etc)
+summary(bike_df)  #Statistical summary of data. Mainly for numeric.
+```
+
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+## Adding date, month, year, day of week columns
+bike_df <- bike_df %>% 
+  mutate(year = format(as.Date(started_at), "%Y")) %>% # extract year
+  mutate(month = format(as.Date(started_at), "%B")) %>% #extract month
+  mutate(date = format(as.Date(started_at), "%d")) %>% # extract date
+  mutate(day_of_week = format(as.Date(started_at), "%A")) %>% # extract day of week
+  mutate(ride_length = difftime(ended_at, started_at)) %>% 
+  mutate(start_time = strftime(started_at, "%H"))
+
+# converting 'ride_length' to numeric for calculation on data
+
+bike_df <- bike_df %>% 
+  mutate(ride_length = as.numeric(ride_length))
+is.numeric(bike_df$ride_length) # to check it is right format
+```
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# adding ride distance in km
+library(geosphere)
+bike_df$ride_distance <- distGeo(matrix(c(bike_df$start_lng, bike_df$start_lat), ncol = 2), matrix(c(bike_df$end_lng, bike_df$end_lat), ncol = 2))
+
+bike_df$ride_distance <- bike_df$ride_distance/1000 #distance in km
+```
+
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Clean data
+# and checked for quality by Divvy where ride_length was negative or 'zero'
+bike_df_clean <- bike_df[!(bike_df$ride_length <= 0),]
+```
+
+
+### Analyze
+
+Analyzing data involves the use of statistical and computational techniques to extract insights and knowledge from data. The goal of data analysis is to identify patterns, trends, relationships, and anomalies in the data that can inform decision-making and drive business outcomes.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Show summary data
+summary(bike_df_clean)
+```
+
+Conduct descriptive analysis.
+Run a few calculations in one file to get a better sense of the data layout. Options:
+
+* Calculate the mean of ride_length
+* Calculate the max ride_length
+* Calculate the mode of day_of_week
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+  summarise(average_ride_length = mean(ride_length), median_length = median(ride_length), 
+            max_ride_length = max(ride_length)) %>% gt()
+```
+
+* Calculate the average ride_length for members and casual riders. Try rows = member_casual; Values = Average of ride_length.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+  group_by(member_casual) %>% 
+  summarise(rides = length(ride_id),
+            ride_pct = (length(ride_id) / nrow(bike_df_clean)) * 100) %>% 
+  gt()
+```
+
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+  group_by(rows = member_casual) %>% 
+  summarise(Values = mean(ride_length)) %>% 
+  ggplot(aes(x = rows, y = Values, fill = rows)) +
+  geom_col() +
+  scale_fill_viridis_d() +
+  labs(title = "Number of trips",
+       y = "Number of rides",
+       x = "Members types",
+       subtitle = "Number of trips made by Casual and members")+
+  theme_minimal()
+```
+
+For the year 2022 we see that the number of occasional members have made the longest journeys compared to permanent members, i.e. respective percentages of **59%** against **40.9%**
+
+* Calculate the average ride_length for users by day_of_week. Try columns = day_of_week; Rows = member_casual; Values = Average of ride_length.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+    group_by(columns = day_of_week, Rows = member_casual) %>% 
+    summarise(Values = mean(ride_length), .groups='drop') %>% 
+  arrange(Rows, columns)  %>% 
+  ggplot(mapping = aes(x = columns, y = Values, fill = Rows)) +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  scale_fill_viridis_d() +
+  labs(title = "Average of Ride Length", 
+       subtitle = "the average ride length for users by day of week",
+       x = "Days of Week",
+       y = "Ride Length Average") +
+  theme_minimal()
+```
+Looking across weekdays, occasional users have the longest journey lengths on average.
+
+* Calculate the number of rides for users by day_of_week by adding Count of trip_id to Values.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+    group_by(columns = day_of_week) %>% 
+    summarise(Values = length(ride_id)) %>% 
+  ggplot(mapping = aes(x = reorder(columns, -Values), y = Values,
+                       fill = columns)) +
+  scale_fill_viridis_d() +
+  geom_col(show.legend = FALSE) +
+  #theme(legend.position="none") +
+  labs(title = "Nomber of Rides",
+       subtitle = "number of rides for users by day of week",
+       x = "Day of Week",
+       y = "Number of Rides",
+       caption = "Cyclistic trip data") +
+  theme_minimal()
+```
+the use of bicycles is more important during the weekend, the days of Saturday register the greatest number of users.
+
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+    group_by(Days = day_of_week, members = member_casual) %>% 
+    summarise(Values = length(rideable_type),.groups='drop') %>% 
+  ggplot(mapping = aes(x = Days , y = Values,
+                       fill = members)) +
+  scale_fill_viridis_d() +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  #theme(legend.position="none") +
+  labs(title = "Rideable Type",
+       subtitle = "number and type of bicycles used per user per day",
+       x = "Days",
+       y = "Number of used bicylcle",
+       caption = "Cyclistic trip data") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
+```
+
+On the other hand, if we focus on the type of gear used in the field, we can clearly see that permanent users use bicycles more than occasional users.
+
+```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+bike_df_clean %>% 
+    group_by(month = month, members = member_casual) %>% 
+    summarise(Values = mean(ride_length),.groups='drop') %>% 
+  ggplot(mapping = aes(x = month , y = Values,
+                       fill = members)) +
+  scale_fill_viridis_d() +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  #theme(legend.position="none") +
+  labs(title = "Rides Averages",
+       subtitle = "average of rides for member and casual by month",
+       x = "Months",
+       y = "Rides Averages",
+       caption = "Cyclistic trip data") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
+```
+
+
+As in weekdays, occasional users also have a greater presence during all months of the year.
 
