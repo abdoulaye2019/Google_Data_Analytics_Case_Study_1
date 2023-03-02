@@ -348,6 +348,11 @@ bike_df_clean %>%
 On the other hand, if we focus on the type of gear used in the field, we can clearly see that permanent users use bicycles more than occasional users.
 
 ```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
+# Reordered month correctly
+
+bike_df_clean$month <- ordered(bike_df_clean$month, 
+                            levels=c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"))
+
 bike_df_clean %>% 
     group_by(month = month, members = member_casual) %>% 
     summarise(Values = mean(ride_length),.groups='drop') %>% 
@@ -367,4 +372,82 @@ bike_df_clean %>%
 
 
 As in weekdays, occasional users also have a greater presence during all months of the year.
+
+**Create Maps for Geographic Visualization**
+
+With the size  of the dataset, we are going to map the number of casual and members in the month of march to make a comparison with ride length and the difference between the two groups of users by the **DuSable Lake Shore Dr & Monroe St** station _start_station_name_
+
+For this analysis we are going to use `mapview` packages. `Mapview` is an R package that provides an interactive and easy-to-use interface for visualizing spatial data on interactive maps. The package is built on top of the leaflet JavaScript library, which allows for the creation of interactive and customizable web maps.
+
+```{r}
+# Loading the two geospatial packages to map data
+library(mapview)
+library(leafsync)
+```
+
+Use `filter` function to extract the data based on **casual** users the month the **type of bicycle** and the **start station name**
+
+```{r}
+casual_electric_SDGA <- bike_df_clean %>%
+  filter(member_casual == "casual" & month == "mars" & rideable_type == "electric_bike" & 
+           start_station_name == "DuSable Lake Shore Dr & Monroe St") %>% 
+   select(member_casual, Longitude = start_lng, Latitude = start_lat, rideable_type, ride_length)
+```
+
+Use `filter` function to extract the data based on **members** users the month the **type of bicycle** and the **start station name**
+
+```{r}
+member_electric_SDGA <- bike_df_clean %>%
+  filter(member_casual == "member" & month == "mars" & rideable_type == "electric_bike" & 
+           start_station_name == "DuSable Lake Shore Dr & Monroe St") %>% 
+  select(member_casual, Longitude = start_lng, Latitude = start_lat, rideable_type, ride_length)
+```
+
+
+```{r}
+casual <- mapview(casual_electric_SDGA, xcol = "Longitude",
+        ycol = "Latitude",
+        crs = 4326, grid = FALSE,cex = "ride_length",
+        zcol = "ride_length",
+        #col.regions = "tomato",
+        layer.name = "Members",
+        zoom = 19,
+        use.layer.names = mapviewOptions(platform = "leaflet","CartoDB.DarkMatter"))
+
+
+members <- mapview(member_electric_SDGA, xcol = "Longitude",
+        ycol = "Latitude",
+        crs = 4326, grid = FALSE,cex = "ride_length",
+        zcol = "ride_length",
+        #col.regions = "tomato",
+        layer.name = "Members",
+        zoom = 19,
+        use.layer.names = mapviewOptions(platform = "leaflet","CartoDB.DarkMatter"))
+
+sync(casual, members)
+```
+
+Now it's time to share with Stackholders.
+
+### Share
+
+Now that you have performed your analysis and gained some insights into your data, create visualizations to share your
+findings. Moreno has reminded you that they should be sophisticated and polished in order to effectively communicate to the
+executive team. Use the following Case Study Roadmap as a guide:
+
+**Key findings:**
+
+In general we can see a situation where occasional users change the way our brain predicted the results.
+
+* For the year 2022 we see that the number of occasional members have made the longest journeys compared to permanent members, i.e. respective percentages of **59%** against **40.9%**;
+* Looking across weekdays, occasional users have the longest journey lengths on average.
+* the use of bicycles is more important during the weekend, the days of Saturday register the greatest number of users.
+* On the other hand, if we focus on the type of gear used in the field, we can clearly see that permanent users use bicycles more than occasional users.
+* As in weekdays, occasional users also have a greater presence during all months of the year.
+
+
+
+
+
+
 
