@@ -445,6 +445,8 @@ In general we can see a situation where occasional users change the way our brai
 * On the other hand, if we focus on the type of gear used in the field, we can clearly see that permanent users use bicycles more than occasional users.
 * As in weekdays, occasional users also have a greater presence during all months of the year.
 
+For sharing this work with wi gonna use **Tableau**. **Tableau** is a powerful tool for data visualization and analysis, and it can be used in a wide variety of settings, from business and finance to healthcare and education. With its user-friendly interface and powerful features, Tableau has become a popular choice for data analysts, business intelligence professionals, and other users who need to work with data on a regular basis.
+
 
 
 
