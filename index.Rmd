@@ -447,6 +447,10 @@ In general we can see a situation where occasional users change the way our brai
 
 For sharing this work with wi gonna use **Tableau**. **Tableau** is a powerful tool for data visualization and analysis, and it can be used in a wide variety of settings, from business and finance to healthcare and education. With its user-friendly interface and powerful features, Tableau has become a popular choice for data analysts, business intelligence professionals, and other users who need to work with data on a regular basis.
 
+Images
+
+
+
 
 
 
