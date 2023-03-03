@@ -1,6 +1,7 @@
 ---
 title: "Google Data Analytics: Case Study 1"
 date: "2023-02-28"
+author: "[Abdoulaye Leye (GiS, Data Analyst Specialist)](https://www.linkedin.com/in/abdoulaye-leye-0390b3167)"
 output:
   html_document:
     code_folding: hide
@@ -21,8 +22,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Introduction:
-
-Hello!
 
 Being in the last course of Google Data Analytics Certification, in this part we are going to a case study based on a dataset of bicycles. In this step, we will cover all the steps that we have covered during this journey in data analysis steps.
 
@@ -286,6 +285,7 @@ bike_df_clean %>%
   theme_minimal()
 ```
 
+
 For the year 2022 we see that the number of occasional members have made the longest journeys compared to permanent members, i.e. respective percentages of **59%** against **40.9%**
 
 * Calculate the average ride_length for users by day_of_week. Try columns = day_of_week; Rows = member_casual; Values = Average of ride_length.
@@ -304,6 +304,8 @@ bike_df_clean %>%
        y = "Ride Length Average") +
   theme_minimal()
 ```
+
+
 Looking across weekdays, occasional users have the longest journey lengths on average.
 
 * Calculate the number of rides for users by day_of_week by adding Count of trip_id to Values.
@@ -324,7 +326,8 @@ bike_df_clean %>%
        caption = "Cyclistic trip data") +
   theme_minimal()
 ```
-the use of bicycles is more important during the weekend, the days of Saturday register the greatest number of users.
+
+The use of bicycles is more important during the weekend, the days of Saturday register the greatest number of users.
 
 
 ```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
@@ -345,7 +348,38 @@ bike_df_clean %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
 ```
 
+
 On the other hand, if we focus on the type of gear used in the field, we can clearly see that permanent users use bicycles more than occasional users.
+
+**Calculate the type of bike used by the different users**
+
+```{r}
+bike_df_clean %>% 
+  group_by(Days = day_of_week, members = member_casual, type = rideable_type) %>% 
+  summarise(Values = length(rideable_type),.groups='drop') %>% 
+  ggplot(mapping = aes(x = type , y = Values,
+                       fill = members)) +
+  scale_fill_viridis_d() +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  #theme(legend.position="none") +
+  labs(title = "Rideable Type",
+       subtitle = "number and type of bicycles used per user",
+       x = "Types of Bicycles",
+       y = "Number of Bicylcle Type",
+       caption = "Cyclistic trip data") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
+```
+
+
+The casual use more type of bike three **types of bike** than members **two types of bike**.
+
+::: {.infobox .note data-latex="{note}"}
+
+**NOTICE!**
+
+The types called **Docked Bike** are only used by Casual users.
+:::
 
 ```{r class.source = 'fold-show', message=FALSE, warning=FALSE}
 # Reordered month correctly
@@ -427,6 +461,9 @@ members <- mapview(member_electric_SDGA, xcol = "Longitude",
 sync(casual, members)
 ```
 
+
+The analysis that we have making on the month of march show clearly that the casual users is most important than the members' users. The two maps are synchronous to show this analytical thinking.
+
 Now it's time to share with Stackholders.
 
 ### Share
@@ -447,12 +484,43 @@ In general we can see a situation where occasional users change the way our brai
 
 For sharing this work with wi gonna use **Tableau**. **Tableau** is a powerful tool for data visualization and analysis, and it can be used in a wide variety of settings, from business and finance to healthcare and education. With its user-friendly interface and powerful features, Tableau has become a popular choice for data analysts, business intelligence professionals, and other users who need to work with data on a regular basis.
 
-Images
+In this dashboard we can see different graphs to show numbers and statistics between Casuals and Members, this dashboard can help stakeholders to make Data-Driven Decisions Making and optimize the capacity to transform casuals into members.
+
+![Dashboard](Cyclistic_bike_share_Case_Study.png)
 
 
+The dashboard can viewing using this URL [Cyclistic Bike-Share Case Study 1 Tableau Public]('https://public.tableau.com/app/profile/abdoulaye6271/viz/CyclisticBike-ShareCaseStudy1/GoogleDataAnalyticsCaseStudy1')
+
+### Acte
+
+**After the analysis and Sharing, the finding of this work are:**
+
+* occasional users seem to enjoy adventures more than permanent members, perhaps due to a desire to cycle.
+
+* At the level of every month we see a fairly large number of occasional users than permanent users. We even see that occasional users constitute 2/3 of the total users.
+
+* The length of the linears made by occasional users are greater than permanent users.
 
 
+**For the recommendations:**
 
+* I think that doing advertising campaigns could add value in order to increase the number of permanent members.
+
+* Try to do as much promotion as possible to encourage occasional users to join as permanent members.
+
+* During the high intensity months (March, April, May, June) make a good impression in terms of customer management in order to attract more members.
+
+## Conclusion
+
+This is an interesting Case Study based on the Bicycle dataset. For this work, tools such as [R]("https://www.r-project.org/") programming language, [Spreadsheets]("https://www.google.com/intl/fr/sheets/about/"), and [Tableau]("https://public.tableau.com/app/discover") Public Software for Sharing our findings. Thanks a lot.
+
+::: {.infobox .note data-latex="{note}"}
+
+**NOTICE!**
+
+Portfolio;[**Cyclistic Bike-Share Case Study 1 Tableau Public**]('https://public.tableau.com/app/profile/abdoulaye6271/viz/CyclisticBike-ShareCaseStudy1/GoogleDataAnalyticsCaseStudy1')
+
+:::
 
 
 
