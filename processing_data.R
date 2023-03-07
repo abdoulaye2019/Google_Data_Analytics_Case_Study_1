@@ -91,3 +91,20 @@ bike_df_clean %>%
   group_by(month = month, members = member_casual) %>% 
   summarise(Values = mean(ride_length),.groups='drop') %>% 
   write.csv("monthly_mean_users.csv")
+
+
+bike_df_clean %>% 
+  group_by(Days = day_of_week, members = member_casual, type = rideable_type) %>% 
+  summarise(Values = length(rideable_type),.groups='drop') %>% 
+  ggplot(mapping = aes(x = type , y = Values,
+                       fill = members)) +
+  scale_fill_viridis_d() +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  #theme(legend.position="none") +
+  labs(title = "Rideable Type",
+       subtitle = "number and type of bicycles used per user per day",
+       x = "Days",
+       y = "Number of used bicylcle",
+       caption = "Cyclistic trip data") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))

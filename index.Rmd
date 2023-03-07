@@ -489,7 +489,7 @@ In this dashboard we can see different graphs to show numbers and statistics bet
 ![Dashboard](Cyclistic_bike_share_Case_Study.png)
 
 
-The dashboard can viewing using this URL [Cyclistic Bike-Share Case Study 1 Tableau Public]('https://public.tableau.com/app/profile/abdoulaye6271/viz/CyclisticBike-ShareCaseStudy1/GoogleDataAnalyticsCaseStudy1')
+The dashboard can viewing using this URL [Tableau_Public](https://public.tableau.com/app/profile/abdoulaye6271/viz/CyclisticBike-ShareCaseStudy1/GoogleDataAnalyticsCaseStudy1)
 
 ### Acte
 
@@ -512,13 +512,14 @@ The dashboard can viewing using this URL [Cyclistic Bike-Share Case Study 1 Tabl
 
 ## Conclusion
 
-This is an interesting Case Study based on the Bicycle dataset. For this work, tools such as [R]("https://www.r-project.org/") programming language, [Spreadsheets]("https://www.google.com/intl/fr/sheets/about/"), and [Tableau]("https://public.tableau.com/app/discover") Public Software for Sharing our findings. Thanks a lot.
+This is an interesting Case Study based on the Bicycle dataset. For this work, tools such as [R](https://www.r-project.org/) programming language, [Spreadsheets](https://www.google.com/intl/fr/sheets/about/), and [Tableau](https://public.tableau.com/app/discover) Public Software for Sharing our findings. Thanks a lot.
 
 ::: {.infobox .note data-latex="{note}"}
 
 **NOTICE!**
 
-Portfolio;[**Cyclistic Bike-Share Case Study 1 Tableau Public**]('https://public.tableau.com/app/profile/abdoulaye6271/viz/CyclisticBike-ShareCaseStudy1/GoogleDataAnalyticsCaseStudy1')
+The dashboard can viewing using this URL
+Portfolio;[**Tableau_Public**](https://public.tableau.com/app/profile/abdoulaye6271/viz/CyclisticBike-ShareCaseStudy1/GoogleDataAnalyticsCaseStudy1)
 
 :::
 
